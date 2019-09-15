@@ -41,26 +41,35 @@ router.post('/register', function (req, res, next) {
       password: getHash(password)
     };
     const collection = client.db("exchange-idea").collection("users");
-    collection.insertOne(myobj, function(err, res) {
-      if (err) throw err;
-      client.close();
-    });
-  });
+    collection.find({email: email}).toArray(function(err, items) {
+      if(err) throw err;
+      if(items.length > 0) {
+        res.redirect('/register?status=' + encodeURIComponent('email-already-used'));
 
-  // console.log(username);
-  res.redirect('/register?status=' + encodeURIComponent('success'));
+      } else{
+        collection.insert(myobj, function(err, res) {
+          if(err) throw err;
+          res.redirect('/register?status=' + encodeURIComponent('success'));
+
+
+        });
+      }
+      client.close();
+
+
+    });
+   
+  });
+  
 
 });
 
 router.get('/login', function(req, res, next) {
   res.render('login');
-
 });
 
 
 router.post('/login', function(req, res, next) {
-
-  console.log('After posting login form');
 
   var email = req.body.email;
   var password = getHash(req.body.password);
@@ -74,25 +83,36 @@ router.post('/login', function(req, res, next) {
     };
     const collection = client.db("exchange-idea").collection("users");
     collection.find(query).toArray(function(err, items) {
+      if(err) throw err;
+
       if(items.length == 1) {
         res.cookie('userData',items[0],{ maxAge: 1000 * 60 * 60 * 24 });
         res.redirect('/home');
       } else{
-        res.redirect('/login?error=' + encodeURIComponent('incorrect'));
+        res.redirect('/login?status=' + encodeURIComponent('incorrect'));
       }
       client.close();
     });
   });
 
- 
+});
 
 
-
-
+router.get('/logout', function (req, res) {
+  res.clearCookie('userData');
+  res.redirect('/login');
 });
 
 router.get('/home', function (req, res, next) {
-  res.render('home');
+  if(req.cookies.userData == undefined) {
+    res.redirect('/login');
+  } else{
+    res.render('home', {
+      username : req.cookies.userData.username,
+      email : req.cookies.userData.email
+    });
+  }
+
 });
 
 
