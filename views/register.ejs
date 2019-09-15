@@ -21,7 +21,12 @@
         <div class="col-md-3"></div>
 
         <div class="col-md-6">
+                <div class="alert alert-success alert-dismissible collapse" id="registerAlert">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <span id="registerAlertText"></span>
+                </div>
             <div class="card">
+                    
                 <div class="card-header">Register</div>
                 <div class="card-body">
                   <form action="" method="post">
@@ -59,6 +64,21 @@
 
     </div>
 </div>
+
+<script text="text/javascript">
+var urlParams = new URLSearchParams(window.location.search);
+
+if(urlParams.get('status') == "success") {
+
+    $('#registerAlertText').text('Congatulations! Registration is complete.');
+    $('#registerAlert').show();
+    //console.log('here');
+}
+
+//console.log($('#registerAlertText').text());
+
+</script>
+
 
 </body>
 </html>

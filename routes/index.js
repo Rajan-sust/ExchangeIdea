@@ -2,11 +2,17 @@ var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
+var crypto = require('crypto');
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var url = "mongodb://127.0.0.1:27017";
+
+
+function getHash(pswd) {
+  return crypto.createHash('sha256').update(pswd).digest('hex');
+}
 
 
 
@@ -25,24 +31,23 @@ router.post('/register', function (req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
 
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url, function(err, client) {
     if (err) throw err;
-    var dbo = db.db("exchange-idea");
     var myobj = {
       username : username,
       email: email,
-      password: password
-
+      password: getHash(password)
     };
-    dbo.collection("users").insertOne(myobj, function(err, res) {
+    var db = client.db("exchange-idea");
+    db.collection("users").insertOne(myobj, function(err, res) {
       if (err) throw err;
       console.log("Document of 1 User Inserted");
-      db.close();
+      client.close();
     });
   });
 
   // console.log(username);
-  res.redirect('/register');
+  res.redirect('/register?status=' + encodeURIComponent('success'));
 
 });
 
@@ -58,3 +63,11 @@ router.get('/home', function (req, res, next) {
 
 
 module.exports = router;
+
+
+/*
+show dbs
+use mydb
+show collections
+*/
+
