@@ -2,6 +2,23 @@
 <html lang="en">
 <head>
     <%- include('head'); -%>
+    <style>
+        .same-line {
+            height: 10px; /*childrens it's all absolute position, so must set height*/
+            position: relative;
+        }
+        .same-line div{
+            display: inline-block;
+            position: absolute;
+        }
+        .on-the-left {
+            left:0px;
+        }
+        
+        .on-the-right {
+            right: 0px;
+        }
+    </style>
     
     
 </head>
@@ -24,6 +41,18 @@
     </ul>
 
     </nav>
+
+    <div class="container">
+        <div class="row">
+            <div col-md-3></div>
+            <div col-md-6></div>
+            <div col-md-3></div>
+        </div>
+
+
+    </div>
+
+    
 
 </body>
 </html>
