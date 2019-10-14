@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head'); -%>
+
+    <style>
+    .center_div{
+        padding-top: 2%;
+        margin: 0 auto;
+        width:50% ;
+    }
+    </style>
+    
+    
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="/home" style="color: white;">ExchangeIdea</a>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: white;"><%= username %> profile</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#"  style="color: teal">My Q&A</a>
+                
+                <a class="dropdown-item" href="/logout"  style="color: teal">Logout</a>
+              </div>
+        </li>
+    </ul>
+</nav>
+
+<div class="container">
+<div class="row">
+    <div class="center_div">
+            <form method="POST" action="">
+                    <div class="form-group">
+                      <label><strong>Question Title</strong></label>
+                      <input type="text" class="form-control" name="title" placeholder="Give a title..." required>
+                    </div>
+                   
+                  
+                    <div class="form-group">
+                      <label><strong>Questiion Body</strong></label>
+                      <textarea class="form-control" name="body" rows="10" placeholder="Ask your question..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                            <label><strong>Code Snippet</strong></label>
+                            <textarea class="form-control" name="code" rows="5" placeholder="Put your code..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                            <label ><strong>Select Tag</strong></label>
+                            <select class="form-control" name="tag">
+                              <option value="C++">C++</option>
+                              <option value="Python">Python</option>
+                              <option value="Java">Java</option>
+                              <option value="Javascript">Javascript</option>
+                              <option value="PHP">PHP</option>
+                            </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <button class="form-control btn btn-primary" type="submit">Ask Question</button>
+                    </div>
+                  </form>
+    </div>
+
+</div>
+
+</div>
+
+   
+
+
+    
+</body>
+</html>

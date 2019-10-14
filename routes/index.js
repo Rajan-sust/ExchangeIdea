@@ -4,7 +4,7 @@ var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 var crypto = require('crypto');
 var cookieParser = require('cookie-parser');
-
+var mongo = require('mongodb');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -107,11 +107,108 @@ router.get('/home', function (req, res, next) {
   if(req.cookies.userData == undefined) {
     res.redirect('/login');
   } else{
-    res.render('home', {
+
+
+
+
+    MongoClient.connect(url, { useNewUrlParser: true , useUnifiedTopology: true}, function(err, client) {
+      if (err) throw err;
+      
+      const collection = client.db("exchange-idea").collection("questions");
+      collection.find().toArray(function(err, items) {
+        if(err) throw err;
+
+        res.render('home', {
+
+          username : req.cookies.userData.username,
+          email : req.cookies.userData.email,
+          questions : items
+        });
+  
+        
+        client.close();
+      });
+    });
+
+
+    
+  }
+
+});
+
+router.get('/askquestion', function(req, res, next){
+  if(req.cookies.userData == undefined) {
+    res.redirect('/login');
+  } else{
+    res.render('askquestion', {
       username : req.cookies.userData.username,
       email : req.cookies.userData.email
     });
   }
+});
+
+
+router.post('/askquestion', function(req, res, next) {
+
+  
+  //console.log(question);
+  //res.send('value received from form');
+
+
+
+  MongoClient.connect(url, { useNewUrlParser: true , useUnifiedTopology: true}, function(err, client) {
+    if (err) throw err;
+    var question = {
+      title : req.body.title,
+      body : req.body.body,
+      code : req.body.code,
+      tag : req.body.tag,
+      email : req.cookies.userData.email,
+      time : new Date().getTime()
+    }
+    const collection = client.db("exchange-idea").collection("questions");
+
+    collection.insert(question, function(err, res) {
+      if(err) throw err;
+      client.close();
+
+
+    });
+    
+  });
+
+  res.redirect('/home');
+
+  
+
+
+});
+
+router.get('/question/:id', function(req, res, next) {
+
+  var id = req.params.id;
+  MongoClient.connect(url, { useNewUrlParser: true , useUnifiedTopology: true}, function(err, client) {
+    if (err) throw err;
+    
+    const collection = client.db("exchange-idea").collection("questions");
+
+    collection.findOne({"_id" : new mongo.ObjectID(id)}, function(err, result) {
+      if(err) throw err;
+
+      console.log(result);
+      client.close();
+
+
+    });
+    
+  });
+
+
+
+
+
+  
+  res.send("congo");
 
 });
 
@@ -125,5 +222,6 @@ show dbs
 use mydb
 show collections
 db.collection_name.find().pretty()
+db.createCollection("col-name") -> create a collection
 */
 

@@ -30,7 +30,7 @@
 
     <ul class="navbar-nav ml-auto">
 
-            <li><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Ask Question</button></li>
+            <li><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/askquestion">Ask Question</a></button></li>
     
 
             <!-- Dropdown -->
@@ -54,6 +54,18 @@
             <div col-md-6></div>
             <div col-md-3></div>
         </div>
+
+
+    </div>
+
+    <div>
+        <ul>
+
+            <% for(var i=0; i<questions.length; i++) {%>
+              
+                    <li> <a href=  <%= "/question/" + questions[i]._id %>    >  <%= questions[i].title %></a></li>
+            <% } %>
+        </ul>
 
 
     </div>
