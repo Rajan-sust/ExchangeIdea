@@ -195,7 +195,12 @@ router.get('/question/:id', function(req, res, next) {
     collection.findOne({"_id" : new mongo.ObjectID(id)}, function(err, result) {
       if(err) throw err;
 
-      console.log(result);
+      res.render('question', {
+        username : req.cookies.userData.username,
+        email : req.cookies.userData.email,
+        question : result
+
+      });
       client.close();
 
 
@@ -208,7 +213,7 @@ router.get('/question/:id', function(req, res, next) {
 
 
   
-  res.send("congo");
+
 
 });
 

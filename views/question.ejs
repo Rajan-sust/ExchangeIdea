@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head'); -%>
+    <style>
+        .same-line {
+            height: 10px; /*childrens it's all absolute position, so must set height*/
+            position: relative;
+        }
+        .same-line div{
+            display: inline-block;
+            position: absolute;
+        }
+        .on-the-left {
+            left:0px;
+        }
+        
+        .on-the-right {
+            right: 0px;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="/home" style="color: white;">ExchangeIdea</a>
+
+  
+
+    <ul class="navbar-nav ml-auto">
+
+            <li><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/askquestion">Ask Question</a></button></li>
+    
+
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: white;"><%= username %> profile</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#"  style="color: teal">My Q&A</a>
+                
+                <a class="dropdown-item" href="/logout"  style="color: teal">Logout</a>
+              </div>
+            </li>
+
+            
+    </ul>
+
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div col-md-3></div>
+            <div col-md-6></div>
+            <div col-md-3></div>
+        </div>
+
+
+    </div>
+
+    <h1><%=question.title%></h1>
+    <p><%=question.body%></p>
+    <div>
+        <code><%=question.code%></code>
+           
+                    
+            
+        
+    </div>
+
+    <p>Tag: <%=question.tag%></p>
+
+
+
+
+    
+
+</body>
+</html>
