@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <%- include('head'); -%>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
 
     <style>
     .center_div{
         padding-top: 2%;
         margin: 0 auto;
         width:50% ;
+    }
+    .ck-editor__editable {
+      min-height: 250px;
     }
     </style>
     
@@ -33,6 +37,10 @@
 <div class="container">
 <div class="row">
     <div class="center_div">
+
+
+        
+
             <form method="POST" action="">
                     <div class="form-group">
                       <label><strong>Question Title</strong></label>
@@ -42,13 +50,14 @@
                   
                     <div class="form-group">
                       <label><strong>Questiion Body</strong></label>
-                      <textarea class="form-control" name="body" rows="10" placeholder="Ask your question..." required></textarea>
+                      <textarea name="content" id="editor"></textarea>
+                      <!-- <textarea class="form-control" name="body" rows="10" placeholder="Ask your question..." required></textarea> -->
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                             <label><strong>Code Snippet</strong></label>
                             <textarea class="form-control" name="code" rows="5" placeholder="Put your code..."></textarea>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                             <label ><strong>Select Tag</strong></label>
@@ -63,7 +72,7 @@
 
 
                     <div class="form-group">
-                        <button class="form-control btn btn-primary" type="submit">Ask Question</button>
+                        <button class="form-control btn btn-primary" type="submit" style="background-color: #343a40;">Ask Question</button>
                     </div>
                   </form>
     </div>
@@ -71,9 +80,24 @@
 </div>
 
 </div>
+<!-- #343a40!important; -->
 
-   
 
+
+<script>
+ClassicEditor
+    .create( document.querySelector( '#editor' ) )
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+ClassicEditor.replace( 'editor', {
+    height: 400
+} );
+    
+</script>
 
     
 </body>

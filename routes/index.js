@@ -160,12 +160,13 @@ router.post('/askquestion', function(req, res, next) {
     if (err) throw err;
     var question = {
       title : req.body.title,
-      body : req.body.body,
-      code : req.body.code,
+      content : req.body.content,
       tag : req.body.tag,
       email : req.cookies.userData.email,
       time : new Date().getTime()
     }
+
+    console.log(question);
     const collection = client.db("exchange-idea").collection("questions");
 
     collection.insert(question, function(err, res) {

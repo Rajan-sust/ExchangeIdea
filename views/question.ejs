@@ -58,21 +58,40 @@
 
     </div>
 
+
+
+
+
     <h1><%=question.title%></h1>
-    <p><%=question.body%></p>
+
+
+    <div id="ckeditor">
+        <!-- <%=question.content%> -->
+    </div>
+    <!-- <p><%=question.body%></p>
     <div>
         <code><%=question.code%></code>
            
                     
             
         
-    </div>
+    </div> -->
 
     <p>Tag: <%=question.tag%></p>
 
-
-
-
+    <script>
+        function replaceAll(searchString, replaceString, str) {
+            return str.split(searchString).join(replaceString);
+        }
+        const el = document.getElementById("ckeditor");
+        var text = "<%=question.content%>";
+        //text = replaceAll("&lt;","<",text);
+        //text = replaceAll("&gt;",">",text);
+        console.log(text);
+        el.innerHTML = text;
+        
+        //el.appendChild(document.createTextNode());
+    </script>
     
 
 </body>
