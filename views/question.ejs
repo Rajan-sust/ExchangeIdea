@@ -74,7 +74,24 @@
             <hr>
     </div>
 
-    
+    <div class="center-div">
+            <% for(var i=0; i<question.answeredBy.length; i++) {%>
+                <div>
+                    <%= question.answeredBy[i].content%>
+                    </br>
+                    <strong> Answered by: </strong><%= question.answeredBy[i].username%>
+                    <hr>
+
+
+                </div>
+                    
+                
+                    
+                    
+                    
+            <% } %>
+
+    </div>
 
     <div class="center-div">
         <h5>Your Answer</h5>
