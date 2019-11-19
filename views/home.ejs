@@ -3,21 +3,13 @@
 <head>
     <%- include('head'); -%>
     <style>
-        .same-line {
-            height: 10px; /*childrens it's all absolute position, so must set height*/
-            position: relative;
-        }
-        .same-line div{
-            display: inline-block;
-            position: absolute;
-        }
-        .on-the-left {
-            left:0px;
-        }
+    .center-div {
+        margin: 0 auto;
         
-        .on-the-right {
-            right: 0px;
-        }
+        /* margin: 50px 300px 50px 300px; */
+        width: 700px;
+         
+    }
     </style>
     
     
@@ -48,17 +40,26 @@
 
     </nav>
 
-    <div class="container">
-        <div class="row">
-            <div col-md-3></div>
-            <div col-md-6></div>
-            <div col-md-3></div>
-        </div>
+    <h2 style="text-align: center;">Top Questions</h2>
+    <div class="center-div">
 
+            <% for(var i=0; i<questions.length; i++) {%>
+                    <div class="card" style="border: 1px solid gray;margin-top: 5px;">
+                            <div class="card-body">
+                                 <a href=  <%= "/question/" + questions[i]._id %>    >  <%= questions[i].title %></a>
+                                 <br>
+                                 Tag:<%= " " + questions[i].tag%>
+                            </div>
+                    </div>
+                    
+            <% } %>
 
+           
     </div>
 
-    <div>
+    
+
+    <!-- <div>
         <ul>
 
             <% for(var i=0; i<questions.length; i++) {%>
@@ -68,9 +69,11 @@
         </ul>
 
 
-    </div>
+    </div> -->
 
     
 
 </body>
 </html>
+
+

@@ -2,9 +2,23 @@
 <html lang="en">
 <head>
     <%- include('head'); -%>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
     <style>
-        .same-line {
-            height: 10px; /*childrens it's all absolute position, so must set height*/
+
+    .center-div {
+        margin: 0 auto;
+        
+        /* margin: 50px 300px 50px 300px; */
+        width: 700px;
+         
+    }
+
+    .ck-editor__editable {
+      min-height: 250px;
+    }
+
+        /* .same-line {
+            height: 10px; 
             position: relative;
         }
         .same-line div{
@@ -17,7 +31,7 @@
         
         .on-the-right {
             right: 0px;
-        }
+        }   */
     </style>
     
     
@@ -48,47 +62,50 @@
 
     </nav>
 
-    <div class="container">
-        <div class="row">
-            <div col-md-3></div>
-            <div col-md-6></div>
-            <div col-md-3></div>
-        </div>
+    
 
 
+
+  
+
+    <div class="center-div">
+            <h3><%=question.title%></h3>
+            <p>Tag: <%=question.tag%></p>
+            <hr>
     </div>
 
+    <div class="center-div">
+        <h5>Your Answer</h5>
+        <form method="POST" action="/answer">
+            <textarea class="form-control" id="editor" name="content"></textarea>
+            <input class="form-control" type="hidden"  name="questionId" value="<%=question._id%>">
+            <button class="form-control btn btn-primary" type="submit" style="background-color: #343a40;">Answer</button>
+        </form>
 
-
-
-
-    <h1><%=question.title%></h1>
-
-
-    <div id="ckeditor">
-        <!-- <%=question.content%> -->
     </div>
-    <!-- <p><%=question.body%></p>
-    <div>
-        <code><%=question.code%></code>
-           
-                    
-            
-        
-    </div> -->
-
-    <p>Tag: <%=question.tag%></p>
+    
 
     <script>
-        function replaceAll(searchString, replaceString, str) {
-            return str.split(searchString).join(replaceString);
-        }
-        const el = document.getElementById("ckeditor");
-        var text = "<%=question.content%>";
-        //text = replaceAll("&lt;","<",text);
-        //text = replaceAll("&gt;",">",text);
-        console.log(text);
-        el.innerHTML = text;
+
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            });
+       
+
+        // function replaceAll(searchString, replaceString, str) {
+        //     return str.split(searchString).join(replaceString);
+        // }
+        // const el = document.getElementById("ckeditor");
+        // var text = "<%=question.content%>";
+        // //text = replaceAll("&lt;","<",text);
+        // //text = replaceAll("&gt;",">",text);
+        // console.log(text);
+        // el.innerHTML = text;
         
         //el.appendChild(document.createTextNode());
     </script>

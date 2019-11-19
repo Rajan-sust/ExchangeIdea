@@ -20,12 +20,20 @@ function getHash(pswd) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.redirect('/login');
 });
 
 
 router.get('/register', function (req, res, next) {
-  res.render('register');
+  if(req.cookies.userData) {
+    res.redirect('/home');
+  }else {
+    res.render('register');
+  }
+
+
+
+  
 });
 
 router.post('/register', function (req, res, next) {
@@ -65,7 +73,12 @@ router.post('/register', function (req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login');
+
+  if(req.cookies.userData) {
+    res.redirect('/home');
+  }else {
+    res.render('login');
+  }
 });
 
 
@@ -199,7 +212,8 @@ router.get('/question/:id', function(req, res, next) {
       res.render('question', {
         username : req.cookies.userData.username,
         email : req.cookies.userData.email,
-        question : result
+        question : result,
+        
 
       });
       client.close();
@@ -207,6 +221,26 @@ router.get('/question/:id', function(req, res, next) {
 
     });
     
+  });
+
+  router.post('/answer', function(req, res, next) {
+
+      var answer = {
+        questionId:req.body.questionId,
+        username: req.cookies.userData.username,
+        content: req.body.content
+       
+      }
+      console.log(answer);
+      MongoClient.connect(url, { useNewUrlParser: true , useUnifiedTopology: true}, function(err, client) {
+        if(err) throw err;
+        const collection = client.db("exchange-idea").collection("answers");
+        collection.insertOne(answer, function(err, result){
+          if(err) throw err;
+          res.redirect('/question/' + req.body.questionId);
+          client.close();
+        });
+      });
   });
 
 
