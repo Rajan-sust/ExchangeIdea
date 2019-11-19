@@ -176,7 +176,8 @@ router.post('/askquestion', function(req, res, next) {
       content : req.body.content,
       tag : req.body.tag,
       email : req.cookies.userData.email,
-      time : new Date().getTime()
+      time : new Date().getTime(),
+      answeredBy: []
     }
 
     console.log(question);
@@ -225,17 +226,17 @@ router.get('/question/:id', function(req, res, next) {
 
   router.post('/answer', function(req, res, next) {
 
-      var answer = {
-        questionId:req.body.questionId,
+      var newAnswer = {
+        
         username: req.cookies.userData.username,
         content: req.body.content
        
       }
-      console.log(answer);
+      
       MongoClient.connect(url, { useNewUrlParser: true , useUnifiedTopology: true}, function(err, client) {
         if(err) throw err;
-        const collection = client.db("exchange-idea").collection("answers");
-        collection.insertOne(answer, function(err, result){
+        const collection = client.db("exchange-idea").collection("questions");
+        collection.updateOne({_id:new mongo.ObjectID(req.body.questionId)}, {$push:{answeredBy: newAnswer}},function(err, result){
           if(err) throw err;
           res.redirect('/question/' + req.body.questionId);
           client.close();
