@@ -149,6 +149,9 @@ router.get('/home', function (req, res, next) {
 
 });
 
+
+
+
 router.get('/askquestion', function(req, res, next){
   if(req.cookies.userData == undefined) {
     res.redirect('/login');
@@ -159,6 +162,30 @@ router.get('/askquestion', function(req, res, next){
     });
   }
 });
+
+
+router.get('/myquestion', function(req, res, next) {
+    //res.send("hello world");
+    MongoClient.connect(url, { useNewUrlParser: true , useUnifiedTopology: true}, function(err, client) {
+        if(err) throw err;
+        const collection = client.db("exchange-idea").collection("questions");
+        var query = { email:  req.cookies.userData.email};
+        collection.find(query).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            res.render('myquestion', {
+                username : req.cookies.userData.username,
+                email : req.cookies.userData.email,
+                data : result
+            });
+            client.close();
+        });
+
+    });
+
+});
+
+
 
 
 router.post('/askquestion', function(req, res, next) {
@@ -186,6 +213,8 @@ router.post('/askquestion', function(req, res, next) {
     collection.insert(question, function(err, res) {
       if(err) throw err;
       client.close();
+
+
 
 
     });
@@ -244,7 +273,7 @@ router.get('/question/:id', function(req, res, next) {
       });
   });
 
-
+  module.exports = router;
 
 
 

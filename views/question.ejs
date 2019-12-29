@@ -9,7 +9,7 @@
         margin: 0 auto;
         
         /* margin: 50px 300px 50px 300px; */
-        width: 700px;
+        width: 80%;
          
     }
 
@@ -44,15 +44,14 @@
 
     <ul class="navbar-nav ml-auto">
 
-            <li><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/askquestion">Ask Question</a></button></li>
+        <li><a href="/askquestion"><button class="btn btn-secondary">Ask Question</button></a></li>
     
 
             <!-- Dropdown -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: white;"><%= username %> profile</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#"  style="color: teal">My Q&A</a>
-                
+                <a class="dropdown-item" href="/myquestion"  style="color: teal">My Question</a>
                 <a class="dropdown-item" href="/logout"  style="color: teal">Logout</a>
               </div>
             </li>
@@ -82,7 +81,7 @@
                 <div>
                     <%- question.answeredBy[i].content%>
                     
-                    <strong> Answered by: </strong><%= question.answeredBy[i].username%>
+                    <p style="text-align: right;"><strong> Answered by: </strong><%= question.answeredBy[i].username%></p>
                     <hr>
 
 

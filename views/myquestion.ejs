@@ -23,7 +23,7 @@
     <ul class="navbar-nav ml-auto">
 
             <li><a href="/askquestion"><button class="btn btn-secondary">Ask Question</button></a></li>
-    
+
 
             <!-- Dropdown -->
             <li class="nav-item dropdown">
@@ -39,15 +39,15 @@
 
     </nav>
 
-    <h2 style="text-align: center;">Top Questions</h2>
+    <h2 style="text-align: center;">My Questions</h2>
     <div class="center-div">
 
-            <% for(var i=0; i<questions.length; i++) {%>
+            <% for(var i=0; i<data.length; i++) {%>
                     <div class="card" style="border: 1px solid gray;margin-top: 5px;">
                             <div class="card-body">
-                                 <a href=  <%= "/question/" + questions[i]._id %>    >  <%= questions[i].title %></a>
+                                 <a href=  <%= "/question/" + data[i]._id %>    >  <%= data[i].title %></a>
                                  <br>
-                                 Tag:<%= " " + questions[i].tag%>
+                                 Tag:<%= " " + data[i].tag%>
                             </div>
                     </div>
                     
@@ -57,20 +57,7 @@
            
     </div>
 
-    
-
-    <!-- <div>
-        <ul>
-
-            <% for(var i=0; i<questions.length; i++) {%>
-              
-                    <li> <a href=  <%= "/question/" + questions[i]._id %>    >  <%= questions[i].title %></a></li>
-            <% } %>
-        </ul>
-
-
-    </div> -->
-
+  
     
 
 </body>
